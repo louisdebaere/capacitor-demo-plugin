@@ -3,7 +3,7 @@ An example of a Capacitor plugin which make native Swift and Java code available
 
 ## TypeScript Interface
 
-Open `src/definitions.ts`
+Open [src/definitions.ts](src/definitions.ts)
 
 ```
 declare module "@capacitor/core" {
@@ -20,7 +20,7 @@ export interface DemoPluginPlugin {
 ## Example of exposing native code
 ### iOS
 
-Open `ios/Plugin/Plugin.swift`
+Open [ios/Plugin/Plugin.swift](ios/Plugin/Plugin.swift)
 
 A Capacitor plugin for iOS is a simple Swift class that extends CAPPlugin and has some exported methods that will be callable from Typescript.
 
@@ -50,7 +50,7 @@ CAP_PLUGIN(MyPlugin, "MyPlugin",
 
 ### Android
 
-Open `android/src/main/java/com/louisdebaere/demo/plugin/DemoPlugin.java`
+Open [android/src/main/java/com/louisdebaere/demo/plugin/DemoPlugin.java](android/src/main/java/com/louisdebaere/demo/plugin/DemoPlugin.java)
 
 A Capacitor plugin for Android is a simple Java class that extends com.getcapacitor.Plugin and have a @NativePlugin annotation. It has some methods with @PluginMethod() annotation that will be callable from Typescript.
 
