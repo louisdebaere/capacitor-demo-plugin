@@ -62,8 +62,6 @@ By using the @NativePlugin and @PluginMethod() annotations in your plugins, you 
 This is done in your apps MainActivity, where you add it in e.g. `src/main/java/com/example/myapp/MainActivity.java` like so:
 
 ```
-import com.example.myapp.EchoPlugin;
-
 public class MainActivity extends BridgeActivity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
