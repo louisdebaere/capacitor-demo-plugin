@@ -13,7 +13,7 @@ declare module "@capacitor/core" {
 }
 
 export interface DemoPluginPlugin {
-  echo(options: { value: string }): Promise<{value: string}>;
+  sum(options: { first: number, second: number}): Promise<{value: number}>;
 }
 ```
 
@@ -25,14 +25,18 @@ Open [ios/Plugin/Plugin.swift](ios/Plugin/Plugin.swift)
 A Capacitor plugin for iOS is a simple Swift class that extends CAPPlugin and has some exported methods that will be callable from Typescript.
 
 ```
-@objc(MyPlugin)
-public class MyPlugin: CAPPlugin {
-  @objc func echo(_ call: CAPPluginCall) {
-    let value = call.getString("value") ?? ""
-    call.resolve([
-        "value": value
-    ])
-  }
+@objc(DemoPlugin)
+public class DemoPlugin: CAPPlugin {
+    
+    @objc func sum(_ call: CAPPluginCall) {
+        guard let first = call.getInt("first"),
+            let second = call.getInt("second") else {
+            call.reject("Received invalid input")
+            return
+        }
+        let sum = first + second
+        call.success(["sum": sum])
+    }
 }
 ```
 
@@ -40,12 +44,13 @@ Each plugin method receives an instance of CAPPluginCall containing all the info
 
 #### Export to Capacitor
 
+Open [ios/Plugin/Plugin.m](ios/Plugin/Plugin.m)
+
 To make sure Capacitor can see your plugin, you must do two things: export your Swift class to Objective-C, and register it using the provided Capacitor Objective-C Macros.
 
 ```
-CAP_PLUGIN(MyPlugin, "MyPlugin",
-  CAP_PLUGIN_METHOD(echo, CAPPluginReturnPromise);
-)
+CAP_PLUGIN(DemoPlugin, "DemoPlugin",
+           CAP_PLUGIN_METHOD(sum, CAPPluginReturnPromise);
 ```
 
 ### Android
@@ -56,14 +61,15 @@ A Capacitor plugin for Android is a simple Java class that extends com.getcapaci
 
 ```
 @NativePlugin()
-public class EchoPlugin extends Plugin {
+public class DemoPlugin extends Plugin {
 
     @PluginMethod()
-    public void echo(PluginCall call) {
-        String value = call.getString("value");
-
+    public void sum(PluginCall call) {
+        Integer first = call.getInt("first");
+        Integer second = call.getInt("second");
+        Integer sum = first + second;
         JSObject ret = new JSObject();
-        ret.put("value", value);
+        ret.put("sum", sum);
         call.success(ret);
     }
 }
@@ -87,7 +93,7 @@ public class MainActivity extends BridgeActivity {
     this.init(savedInstanceState, new ArrayList<Class<? extends Plugin>>() {{
       // Additional plugins you've installed go here
       // Ex: add(TotallyAwesomePlugin.class);
-      add(EchoPlugin.class);
+      add(DemoPlugin.class);
     }});
   }
 }
