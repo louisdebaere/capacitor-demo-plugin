@@ -5,5 +5,5 @@ declare module "@capacitor/core" {
 }
 
 export interface DemoPluginPlugin {
-  sum(options: { first: number, second: number}): Promise<{value: number}>;
+  sum(options: { first: number, second: number}): Promise<{sum: number}>;
 }

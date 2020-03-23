@@ -9,9 +9,11 @@ export class DemoPluginWeb extends WebPlugin implements DemoPluginPlugin {
     });
   }
 
-  async echo(options: { value: string }): Promise<{value: string}> {
-    console.log('ECHO', options);
-    return options;
+  async sum(options: { first: number, second: number }): Promise<{ sum: number }> {
+    const first = options.first;
+    const second = options.second
+    console.log('SUM', first, second);
+    return { sum: first + second };
   }
 }
 
