@@ -8,10 +8,13 @@ import Capacitor
 @objc(DemoPlugin)
 public class DemoPlugin: CAPPlugin {
     
-    @objc func echo(_ call: CAPPluginCall) {
-        let value = call.getString("value") ?? ""
-        call.success([
-            "value": value
-        ])
+    @objc func sum(_ call: CAPPluginCall) {
+        guard let first = call.getInt("first"),
+            let second = call.getInt("second") else {
+            call.reject("Received invalid input")
+            return
+        }
+        let sum = first + second
+        call.success(["sum": sum])
     }
 }

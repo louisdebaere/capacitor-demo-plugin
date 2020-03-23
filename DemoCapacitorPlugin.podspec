@@ -1,6 +1,6 @@
 
   Pod::Spec.new do |s|
-    s.name = 'Demo'
+    s.name = 'DemoCapacitorPlugin'
     s.version = '0.0.1'
     s.summary = 'An example of a custom Capacitor plugin'
     s.license = 'MIT'
