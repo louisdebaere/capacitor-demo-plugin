@@ -1,10 +1,26 @@
 # Capacitor Plugin Demo
 An example of a Capacitor plugin which make native Swift and Java code available for use in Typescript for an Ionic project
 
+## TypeScript Interface
+
+Open [src/definitions.ts](src/definitions.ts)
+
+```
+declare module "@capacitor/core" {
+  interface PluginRegistry {
+    DemoPlugin: DemoPluginPlugin;
+  }
+}
+
+export interface DemoPluginPlugin {
+  echo(options: { value: string }): Promise<{value: string}>;
+}
+```
+
 ## Example of exposing native code
 ### iOS
 
-Open `Plugin.swift`
+Open [ios/Plugin/Plugin.swift](ios/Plugin/Plugin.swift)
 
 A Capacitor plugin for iOS is a simple Swift class that extends CAPPlugin and has some exported methods that will be callable from Typescript.
 
@@ -34,7 +50,7 @@ CAP_PLUGIN(MyPlugin, "MyPlugin",
 
 ### Android
 
-Open `EchoPlugin.java`
+Open [android/src/main/java/com/louisdebaere/demo/plugin/DemoPlugin.java](android/src/main/java/com/louisdebaere/demo/plugin/DemoPlugin.java)
 
 A Capacitor plugin for Android is a simple Java class that extends com.getcapacitor.Plugin and have a @NativePlugin annotation. It has some methods with @PluginMethod() annotation that will be callable from Typescript.
 
@@ -62,8 +78,6 @@ By using the @NativePlugin and @PluginMethod() annotations in your plugins, you 
 This is done in your apps MainActivity, where you add it in e.g. `src/main/java/com/example/myapp/MainActivity.java` like so:
 
 ```
-import com.example.myapp.EchoPlugin;
-
 public class MainActivity extends BridgeActivity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
